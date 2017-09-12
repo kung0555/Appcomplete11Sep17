@@ -133,12 +133,14 @@ public class notifications_offline extends AppCompatActivity {
                 ArrayList<Float> dis = new ArrayList<Float>();
                 //วนเก็บค่าระยะห่างแต่ละป้าย
                 for (int a = 0; a < LngBus.size(); a++) {
+                    //เพิ่มค่าตัวแปล dis โดยเรียกใช้งาน method distance ใส่เข้าไป
                     dis.add((float) distance(TestLat.get(a), TestLng.get(a), latChanged, lngChanged));
                     Log.d("LocationListener", "dis " + dis);
-                    //Toast.makeText(getApplicationContext(), "dis  "+dis.get(p), Toast.LENGTH_SHORT).show();
-                }
+                    }
                 if (p == 0) {
                     //แจ้งเตือนเมื่ออยู่ที่ป้ายเริ่มต้น
+                    //ถ้าระยะห่างตำแหน่งที่ p น้อยกว่า 30ม. และ x = 0
+                    //อยู่ใกล้ป้ายเริ่มต้นน้อยกว่า 30ม.
                     if (dis.get(p) < 0.03 && x == 0) {
                         Log.d("Test19", "ป้ายบัจุบัน " + NameBus.get(p));
                         Log.d("Test19", "ป้ายต่อไปคือ " + NameBus.get(p + 1));
@@ -153,12 +155,16 @@ public class notifications_offline extends AppCompatActivity {
                         SumBus2--;
                     }
                     //แจ้งเตือนเมื่อไม่อยู่ที่ป้ายเริ่มต้นและใกล้จะถึงป้ายเริ่มต้น
+                    //ถ้าระยะห่างตำแหน่งที่ p อยู่ระหว่าง 40ม. ถึง 70ม. และ x = 0
+                    //ไม่ได้อยู่ใกล้ป้ายเริ่มต้น จะแจ้งเตือนเมื่อเข้าใกล้ป้ายเริ่มต้นระหว่าง 40ม. ถึง 70ม.
                     if (dis.get(p) < 0.07 && dis.get(p) > 0.04 && x == 0) {
                         Toast.makeText(getApplicationContext(), "ใกล้ถึง  " + NameBus.get(p) + "แล้ว", Toast.LENGTH_SHORT).show();
                         Log.d("Test19", "ใกล้ถึง" + NameBus.get(p) + "แล้ว");
                         x = 2;
                     }
                     //แจ้งเตือนเมื่อถึงป้ายเริ่มต้น
+                    //ถ้าระยะห่างตำแหน่งที่ p น้อยกว่า 20ม. และ x = 2
+                    //้องแจ้งเตือนใกล้ถึงป้ายเริ่มต้นจึงจะทำงาน
                     if (dis.get(p) < 0.02 && x == 2) {
                         Log.d("Test19", "ป้ายบัจุบัน " + NameBus.get(p));
                         Log.d("Test19", "ป้ายต่อไปคือ " + NameBus.get(p + 1));
@@ -170,20 +176,17 @@ public class notifications_offline extends AppCompatActivity {
                         x = 0;
                         p = p + 1;
                         SumBus2--;
-
-
                     }
-
                 }
                 if (p>0) {
-                    //แจ้งเตือนใกล้ถึงป้าย เมื่อระยะห่างระหว่าง 70ม. ถึง 40ม.
+                    //แจ้งเตือนใกล้ถึงป้าย เมื่อระยะห่างระหว่าง 70ม. ถึง 40ม. และ x = 0
                     if (dis.get(p) < 0.07 && dis.get(p) > 0.04 && x == 0) {
                             Toast.makeText(getApplicationContext(), "ใกล้ถึง  " + NameBus.get(p) + "แล้ว", Toast.LENGTH_SHORT).show();
                             Log.d("Test19", "ใกล้ถึง" + NameBus.get(p) + "แล้ว");
                             x = 1;
 
                     }
-                    //แจ้งเตือนถึงป้าย เมื่อระยะห่างน้อยกว่า 20ม.
+                    //แจ้งเตือนถึงป้าย เมื่อระยะห่างน้อยกว่า 20ม.และ x = 1
                     if (dis.get(p) < 0.02 && x == 1) {
                         Log.d("Test19", "ป้ายบัจุบัน " + NameBus.get(p));
                         Toast.makeText(getApplicationContext(), "ป้ายบัจุบัน  " + NameBus.get(p), Toast.LENGTH_SHORT).show();
@@ -204,6 +207,7 @@ public class notifications_offline extends AppCompatActivity {
                         }
                     }
                     //แจ้งเตือนเลยป้าย
+                    //ถ้า ระยะห่างป้ายสุดท้าย มากกว่า 40ม. และ x = 2
                     if (dis.get(dis.size()-1) > 0.04&& x == 2) {
                         Log.d("Test19", "เลย " + NameBus.get(dis.size() - 1));
                         Toast.makeText(getApplicationContext(), "เลย  " + NameBus.get(dis.size()-1)+"แล้ว", Toast.LENGTH_SHORT).show();
@@ -250,20 +254,25 @@ public class notifications_offline extends AppCompatActivity {
 
     //หาระยะทาง
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        //lat1 คือ ค่า Lat ของป้ายรถประจำทาง
+        // lon1 คือ ค่า Lng ของป้ายรถประจำทาง
+        // lat2 คือ ค่า Lat ของ GPS ปัจจุบัน
+        //lon2 คือ ค่า Lng ของ GPS ปัจจุบัน
         double theta = lon1 - lon2;
+        //เรียก Class Math มาใช้งาน
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        //acos คือส่วนกลับของ cos
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515 * 1.609344;
-
         return (dist);
     }
-
+    //แปลงค่าเรเดียนไปเป็นหน่วยองศา ตัวอย่างเช่น เมื่อเราต้องการแปลงค่า -1.570796rad = -1.570796*180 / Math.PI จะได้ประมาณ 90องศา
+    //1องศา=0.01745329rad
     private static double rad2deg(double rad) {
-
         return (rad * 180 / Math.PI);
     }
-
+    //แปลงค่า latไปเป็นค่าเรเดียน เช่น lat=13.779259 จะได้ 0.240493438rad
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }

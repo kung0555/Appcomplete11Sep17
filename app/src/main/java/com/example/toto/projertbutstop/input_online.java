@@ -107,6 +107,7 @@ public class input_online extends AppCompatActivity {
             Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         }
     }
+
     public void onBackPressed() {
         Intent intent = new Intent(input_online.this, home.class);
         startActivity(intent);

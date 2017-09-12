@@ -55,8 +55,8 @@ public class input_offline extends AppCompatActivity {
                         finish();
                     }
                 }   // onClick
-                 });
-        }catch (Exception e){
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -97,15 +97,15 @@ public class input_offline extends AppCompatActivity {
 
     private void endController() {
         try {
-        Button button = (Button) findViewById(R.id.InputbusEnd);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(input_offline.this, MySearchView.class);
-                intent.putExtra("Key", 1100);
-                startActivityForResult(intent, 1100);
-            }
-        });
+            Button button = (Button) findViewById(R.id.InputbusEnd);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(input_offline.this, MySearchView.class);
+                    intent.putExtra("Key", 1100);
+                    startActivityForResult(intent, 1100);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,27 +113,29 @@ public class input_offline extends AppCompatActivity {
 
     private void startController() {
         try {
-        Button button = (Button) findViewById(R.id.InputbusStart);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            Button button = (Button) findViewById(R.id.InputbusStart);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent intent = new Intent(input_offline.this, MySearchView.class);
-                intent.putExtra("Key", 1000);
-                startActivityForResult(intent, 1000);
+                    Intent intent = new Intent(input_offline.this, MySearchView.class);
+                    intent.putExtra("Key", 1000);
+                    startActivityForResult(intent, 1000);
 
-            }   // onClick
-        });
-    } catch (Exception e) {
-        e.printStackTrace();
+                }   // onClick
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    }
-    public void OnclickCancel (View view) {
+
+    public void OnclickCancel(View view) {
 
         Intent intent = new Intent(this, home.class);
         startActivity(intent);
         finish();
     }
+
     public void onBackPressed() {
         Intent intent = new Intent(this, home.class);
         startActivity(intent);
