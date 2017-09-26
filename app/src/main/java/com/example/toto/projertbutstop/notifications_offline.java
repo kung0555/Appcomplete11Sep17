@@ -179,6 +179,15 @@ public class notifications_offline extends AppCompatActivity {
                     }
                 }
                 if (p>0) {
+                    //แจ้งเตือนเลยป้าย
+                    //ถ้า ระยะห่างป้ายสุดท้าย มากกว่า 40ม. และ x = 2
+                    if (dis.get(dis.size()-1) > 0.04&& x == 2) {
+                        Log.d("Test19", "เลย " + NameBus.get(dis.size() - 1));
+                        Toast.makeText(getApplicationContext(), "เลย  " + NameBus.get(dis.size()-1)+"แล้ว", Toast.LENGTH_SHORT).show();
+                        Vibrator v3 = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        v3.vibrate(3000);
+                        x = 3;
+                    }
                     //แจ้งเตือนใกล้ถึงป้าย เมื่อระยะห่างระหว่าง 70ม. ถึง 40ม. และ x = 0
                     if (dis.get(p) < 0.07 && dis.get(p) > 0.04 && x == 0) {
                             Toast.makeText(getApplicationContext(), "ใกล้ถึง  " + NameBus.get(p) + "แล้ว", Toast.LENGTH_SHORT).show();
@@ -208,15 +217,16 @@ public class notifications_offline extends AppCompatActivity {
                     }
                     //แจ้งเตือนเลยป้าย
                     //ถ้า ระยะห่างป้ายสุดท้าย มากกว่า 40ม. และ x = 2
-                    if (dis.get(dis.size()-1) > 0.04&& x == 2) {
-                        Log.d("Test19", "เลย " + NameBus.get(dis.size() - 1));
-                        Toast.makeText(getApplicationContext(), "เลย  " + NameBus.get(dis.size()-1)+"แล้ว", Toast.LENGTH_SHORT).show();
-                        Vibrator v3 = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                        v3.vibrate(3000);
-                        x = 3;
-                    }
+//                    if (dis.get(dis.size()-1) > 0.04&& x == 2) {
+//                        Log.d("Test19", "เลย " + NameBus.get(dis.size() - 1));
+//                        Toast.makeText(getApplicationContext(), "เลย  " + NameBus.get(dis.size()-1)+"แล้ว", Toast.LENGTH_SHORT).show();
+//                        Vibrator v3 = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                        v3.vibrate(3000);
+//                        x = 3;
+//                    }
 
                 }
+                Log.d("Test19", "x"  +x);
             } catch (Exception e) {
                 e.printStackTrace();
             }
