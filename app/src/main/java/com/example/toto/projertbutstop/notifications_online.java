@@ -101,8 +101,10 @@ public class notifications_online extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "เลยป้าย  "+StopEnd, Toast.LENGTH_SHORT).show();
                     Vibrator v3 = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     v3.vibrate(3000);
+                    x=3;
                     Log.d("Test19", "เลยป้าย");
                     Log.d("Test19", "x ==>" + x);
+
                 }
             }
             //แจ้งเตือนเมื่อถึงป้ายจุดหมาย
